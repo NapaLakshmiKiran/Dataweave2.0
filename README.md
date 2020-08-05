@@ -1,1 +1,1 @@
-usblishing the examples of Dataweave
+publishing the examples of Dataweave
