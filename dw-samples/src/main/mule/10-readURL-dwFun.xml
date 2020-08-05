@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="10-readURL-dwFunFlow" doc:id="b8b75610-baed-43da-93a6-be44c363fb4a" >
+		<ee:transform doc:name="Transform Message" doc:id="155c95fa-9b41-49b2-9d72-13c1d428d8f4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myJsonSnippet = readUrl("classpath://myJsonSnippet.json", "application/json")
+output application/csv
+---
+myJsonSnippet.results map(item) -> (item.profile)
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

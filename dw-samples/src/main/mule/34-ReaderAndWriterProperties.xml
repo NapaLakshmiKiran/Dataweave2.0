@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<file:config name="Read_File_Config" doc:name="File Config" doc:id="1282b029-9534-4350-8cd6-4128560ecd17" >
+		<file:connection workingDir="C:\Users\Public\mulestudio-workspace\filePath\IN" />
+	</file:config>
+	<file:config name="Write_File_Config" doc:name="File Config" doc:id="94eda717-c2af-4827-a945-b669185d8337" >
+		<file:connection workingDir="C:\Users\Public\mulestudio-workspace\filePath\OUT" />
+	</file:config>
+	<flow name="ReaderAndWriterPropertiesFlow" doc:id="a91cc69b-87a1-4eeb-a253-39ba9ca75e17" >
+		<file:listener doc:name="On New or Updated File" doc:id="36105e0b-2067-4c1e-a18d-582b2902a9ca" config-ref="Read_File_Config" autoDelete="true" moveToDirectory="C:\Users\Public\mulestudio-workspace\filePath\Archive" outputMimeType='application/csv; separator=","'>
+			<scheduling-strategy >
+				<fixed-frequency frequency="5" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+			<file:matcher filenamePattern="users.csv" />
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="7a6a9ae1-0112-446d-833e-4f956884cabb" message="#[payload]"/>
+		<file:write doc:name="Write" doc:id="462e6666-094d-4923-a512-faf6ddbf1342" config-ref="Write_File_Config" path="C:\Users\Public\mulestudio-workspace\filePath\OUT" createParentDirectories="false">
+			<file:content ><![CDATA[#[output application/csv --- payload]]]></file:content>
+		</file:write>
+	</flow>
+	<flow name="ReaderAndWriterPropertiesFlow1" doc:id="144bcb8e-09f7-4dc8-bf89-eb4172ca62bd" >
+		<ee:transform doc:name="Transform Message" doc:id="28a5fdca-57ab-4588-977d-6eea54ace193" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/csv
+---
+[
+  {
+    "Name":"Mariano",
+    "Last Name":"De achaval"
+  },
+  {
+    "Name":"Leandro",
+    "Last Name":"Shokida"
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+
+	
+		
+</mule>

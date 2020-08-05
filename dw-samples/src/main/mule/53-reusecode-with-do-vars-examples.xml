@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="53-reusecode-with-do-vars-examplesFlow" doc:id="0f7fc761-b7ba-4b7c-afc0-002fbaa23375" >
+		<ee:transform doc:name="Transform Message" doc:id="8c022fb8-741a-4613-b0ba-c57d5892fe7f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+var myVar = 1234
+var myDo = do{
+	var fn = "Lakshmi"
+	var ln = "Kiran"
+	---
+	{
+		id: myVar,
+		firstName: fn,
+		lastname: ln
+	}
+}
+---
+{
+	person: myDo
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

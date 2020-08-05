@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="defaultValuesSettingFlow" doc:id="f5ba98a9-fc87-4709-927f-1115bdf32cc7" >
+		<ee:transform doc:name="default value to vars" doc:id="050d4e52-6c5b-4c7e-a240-94756da38746" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var v1 = { someField : null }
+var v2 = { someField : "123" }
+output application/json
+---
+{
+	v1: v1.someField default "V1 Deffaut value",
+	v2: v2.someField default "V2 Deffaut value"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Default Within if-else and else-if" doc:id="cf78fee6-bed5-493d-b778-615678148923" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var v1 = (1+2)
+output application/json
+---
+if(isOdd(v1)) "odd"
+else "even"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Default When Matching Patterns" doc:id="c9983bb9-a616-4731-b767-9f80e854fe4d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myVar = "someString"
+output application/json
+---
+myVar match {
+    case myVarOne if (myVar == "some") -> ("some" ++ "is myVar")
+    case myVarOne if (myVar == "strings") -> ("strings" ++ "is myVar")
+    else -> myVar ++ " is myVar"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="18-dw-functions-in-dw-variablesFlow" doc:id="d43e5a43-31d9-4c62-a281-91621bfcbeef" >
+		<ee:transform doc:name="Transform Message" doc:id="5bfe928b-c514-493f-a9ed-7dca9908efcf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myjson ={
+	a: avg([1,10]),
+	b: avg([10,20, 30])
+}
+output application/json
+---
+myjson]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

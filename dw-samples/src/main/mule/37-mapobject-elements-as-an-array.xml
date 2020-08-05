@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="37-mapobject-elements-as-an-arrayFlow" doc:id="de8a5e8f-8758-41ff-acca-3c677dae4e7d" >
+		<ee:transform doc:name="Transform Message" doc:id="fe2847c9-6e0f-44cd-91e4-12c5cbbaf85a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var inp = {
+  "inventory": {
+      "book" : {
+        "category": "cooking",
+        "title": "Everyday Italian",
+        "author": "Giada De Laurentiis",
+        "year": "2005",
+        "price": "30.00"
+      },
+      "book" :{
+        "category": "children",
+        "title": "Harry Potter",
+        "author": "J K. Rowling",
+        "year": "2005",
+        "price": "29.99"
+      },
+      "book" :{
+        "category": "web",
+        "title": "Learning XML",
+        "author": "Erik T. Ray",
+        "year": "2003",
+        "price": "39.95"
+      },
+      "magazine" :{
+        "category": "web",
+        "title": "Wired Magazine",
+        "edition": "03-2017",
+        "price": "15.95"
+      },
+        "magazine" :{
+        "category": "business",
+        "title": "Time Magazine",
+        "edition": "04-2017",
+        "price": "17.95"
+      }
+   }
+}
+output application/json
+---
+items: inp.inventory.*book map (item, index) -> {
+	"type": "book",
+	"id": index,
+	"category": item.category,
+	"title": item.title,
+	"author": item.author,
+	"year": item.year,
+	"price": item.price
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

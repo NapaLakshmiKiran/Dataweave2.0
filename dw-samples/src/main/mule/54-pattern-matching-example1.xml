@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="54-pattern-matching-example1Flow" doc:id="2da51da5-044e-4987-8351-e0c2794948e4" >
+		<ee:transform doc:name="Transform Message" doc:id="076e977a-277f-4fc1-ad7e-a8864dd92f64" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"hello1 world1" match {
+	case word matches /(hello)\s\w+/ -> word[1] as String ++ " was matched"
+	case literalMatch:  "hello world"-> upper(literalMatch)
+	case hasOne if( hasOne is Object and hasOne.three? ) -> hasOne.three
+	else -> $
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

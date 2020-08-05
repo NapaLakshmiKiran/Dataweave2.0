@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="14-customFunctionFlow" doc:id="dc06c591-20d5-4626-97fb-cab9289b0453" >
+		<ee:transform doc:name="Transform Message" doc:id="a576bf34-a3b5-4544-adeb-8487f2361db9" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var ed ={name:"lakshmi", sal:"999999"}
+fun userdata(ed) = {sal: ed.sal}
+var vs= [{name: "lakshmi", lastName: "kiran"},{name: "ss", lastName: "dd"}]
+fun toUser(user) = {firstName: user.name, lastName: user.lastName}
+output application/json
+---
+{
+	userdata: userdata(ed),
+	user: toUser(vs)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

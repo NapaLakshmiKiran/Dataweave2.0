@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config2" doc:name="File Config" doc:id="d422602e-1ae8-4446-933f-7d308033820f" >
+		<file:connection workingDir="D:\MuleExamples\MuledocExamples\performBasicTransformation\IN" />
+	</file:config>
+	<flow name="basicTransformationFlow" doc:id="d4795c00-d71a-410e-980e-9815327b63e4" >
+		<file:listener doc:name="On New or Updated File" doc:id="8e8b759a-3f54-402d-b139-4b0a4e7e349d" config-ref="File_Config2" autoDelete="true" moveToDirectory="D:\MuleExamples\MuledocExamples\performBasicTransformation\OUT" directory="D:\MuleExamples\MuledocExamples\performBasicTransformation\IN">
+			<scheduling-strategy >
+				<fixed-frequency frequency="20" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</file:listener>
+		<ee:transform doc:name="Transform XML to JSON" doc:id="e1985e8b-85de-426a-b2ef-4465acdc792b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	  address1: payload.order.buyer.address,
+        city: payload.order.buyer.city,
+        country: payload.order.buyer.nationality,
+        email: payload.order.buyer.email,
+        name: payload.order.buyer.name,
+        postalCode: payload.order.buyer.postCode,
+        stateOrProvince: payload.order.buyer.state
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="75a8be18-1641-4c83-a3a4-b4c05a01e82b" message="#[payload]"/>
+	</flow>
+</mule>

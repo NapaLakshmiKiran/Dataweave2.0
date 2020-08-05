@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="09-ReadFileContent_with_dwFunctionFlow" doc:id="e1fda4e2-1e63-4f31-b923-c109e867404c" >
+		<ee:transform doc:name="Transform Message" doc:id="5e2460c8-cbcb-4982-8c9a-7b90e3d3fa38" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"readingFromClasspath":readUrl("classpath://myJson.json", "application/json"),
+"reading from URL":readUrl("https://jsonplaceholder.typicode.com/posts/1", "application/json"),
+"readelementfrom file": readUrl("classpath://name.dwl").firstName	
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

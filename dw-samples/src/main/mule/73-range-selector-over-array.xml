@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="73-range-selector-over-arrayFlow" doc:id="58dd7fb0-0037-43dd-b5cd-4be4639d8670" >
+		<ee:transform doc:name="Transform Message" doc:id="6c50ff00-8926-4a09-8bbd-dbc283f1ab0d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	 slice: [0,1,2,3,4][0 to 1],
+  last: [0,1,2,3,4][-1 to 0],
+  s:[1,2,3,4,5,6][2 to 4],
+  l:[1,2,3,4,5,6,7,8,9][-2 to 5]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -1,0 +1,6 @@
+smtp:
+    port: "8957"
+http:
+    port: "8081"
+ftp:
+    port: "21"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="47-local-variables-declaration-witin-functionFlow" doc:id="af13cbff-6b29-489c-9ccb-381ed44f1487" >
+		<ee:transform doc:name="Transform Message" doc:id="a692fc9e-72ae-46dd-a478-933961ee30bb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+fun test(param1: String) =do{
+	var suffix = "123"
+	fun innerTest(str: String) = lower(str)
+	---
+	innerTest(param1 ++ suffix)
+}
+output application/json
+---
+test("HELLO")]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

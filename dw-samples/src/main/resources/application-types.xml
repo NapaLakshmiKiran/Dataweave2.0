@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="myjsonType" format="json">
+      <types:shape format="weave" example="myJson.json"><![CDATA[%dw 2.0
+
+type myjsonType = {| hello: String |} {"example": "{\\\"hello\\\":\\\"world\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="ex1" format="xml">
+      <types:example format="xml" element="order" location="examples/ex1.xml"/>
+    </types:type>
+    <types:type name="usersXmlData" format="xml">
+      <types:example format="xml" element="order" location="examples/ex1-1.xml"/>
+    </types:type>
+    <types:type name="test" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="ex2" format="xml">
+      <types:example format="xml" element="order1" location="examples/ex2-1.xml"/>
+    </types:type>
+    <types:type name="SO" format="xml">
+      <types:example format="xml" element="sales-orders" location="examples/salesOrder.xml"/>
+    </types:type>
+    <types:type name="param" format="xml">
+      <types:example format="xml" element="PARAM" location="examples/param.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#e1985e8b-85de-426a-b2ef-4465acdc792b">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="ex1"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#07e959bd-bdd9-4d29-8813-2424b9731377">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="ex2"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#c71aa6a1-4889-4a73-8b94-b4ce15398c1c">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="SO"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

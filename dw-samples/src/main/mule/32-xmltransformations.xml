@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="xmltransformationsFlow" doc:id="4bc94b72-eaab-4132-b7e6-006dd2f001d4" >
+		<ee:transform doc:name="Transform Message" doc:id="c71aa6a1-4889-4a73-8b94-b4ce15398c1c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+s:{
+comments: payload."sales-orders"."sales-order"."order-header".notes.*note[?($.@id == "comments")],
+comments: payload."sales-orders"."sales-order"."order-header".notes.*note[?($.@id == "web order")]
+
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

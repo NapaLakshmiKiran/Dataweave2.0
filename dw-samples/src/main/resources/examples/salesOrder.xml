@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sales-orders>
+	<sales-order>
+		<order-header>
+			<notes>
+				<note id="free Shipping">false</note>
+				<note id="web order">true</note>
+				<note id="comments">please add this</note>
+			</notes>
+		</order-header>
+	</sales-order>
+	<sales-order>
+		<order-header>
+			<notes>
+				<note id="free Shipping">false1</note>
+				<note id="web order">true1</note>
+				<note id="comments">please add this1</note>
+			</notes>
+		</order-header>
+	</sales-order>
+</sales-orders>

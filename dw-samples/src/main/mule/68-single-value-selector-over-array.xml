@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="68-single-value-selector-over-arrayFlow" doc:id="b62e941c-4b95-4550-8be8-0c107a42ea89" >
+		<ee:transform doc:name="Transform Message" doc:id="8c6717a7-0f8c-4837-988e-bed86a65f1f6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myArrayOfKeyValuePairs = [ "aString": "hello", "aNum": 2, "aString" : "world1" ]
+var myArrayOfObjects = [ { "aString": "hello" }, { "aNum": 2 }, { "aString" : "world2" } ]
+output application/json
+---
+{
+	 myKeyValueExample : myArrayOfKeyValuePairs.aString,
+    myObjectExample :  myArrayOfObjects.aString
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

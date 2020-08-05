@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="58-regular-expression-exampleFlow" doc:id="66e5d5d8-beed-4469-9abf-228a92e9b7ac" >
+		<ee:transform doc:name="Transform Message" doc:id="1d9479df-bf20-485c-9251-d5f282a1f048" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myInput = {
+  "phones": [
+    "+1 (415) 229-2009",
+    "(647) 456-7008"
+  ]
+}
+output application/json
+---
+{
+  a: myInput.phones map ($ match {
+     case phone matches /\+(\d+)\s\((\d+)\)\s(\d+\-\d+)/ -> { country: phone[1]}
+     case phone matches /\((\d+)\)\s(\d+\-\d+)/ -> { area: phone[1], number: phone[2] }
+   }),
+ b: myInput.phones map ($ match {
+   case phone matches /\+(\d+)\s\((\d+)\)\s(\d+\-\d+)/ -> { country: phone[1], area: phone[2], number: phone[3] }
+   case phone matches /\((\d+)\)\s(\d+\-\d+)/ -> { area: phone[1], number: phone[2] }
+ })
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

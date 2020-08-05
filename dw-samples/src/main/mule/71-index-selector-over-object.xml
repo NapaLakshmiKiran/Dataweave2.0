@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="71-index-selector-over-objectFlow" doc:id="eba3feea-6410-4a82-ae47-c865d11716e5" >
+		<ee:transform doc:name="Transform Message" doc:id="19674212-219b-4eb3-87ce-032f87766141" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var m = {
+  "nameFirst": "Mark",
+  "nameLast": "Nguyen"
+}
+output application/json
+---
+m[1]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

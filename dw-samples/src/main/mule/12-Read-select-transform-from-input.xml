@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="12-Read-select-transform-from-inputFlow" doc:id="45a4d4ea-217e-45e9-aab1-e5f1fb10b3e0" >
+		<ee:transform doc:name="Transform Message" doc:id="e5e3a564-8c8d-4388-9d8e-43bc39315ce8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myRead = read("<car><color>Green</color><color>Red</color></car>", "application/xml")
+output application/json
+---
+{
+	mySelection: myRead.car,
+	myCarSelection: myRead.car.color,
+	myAllCarSelection: myRead.car.*color,
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

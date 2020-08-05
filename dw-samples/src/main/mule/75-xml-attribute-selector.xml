@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="75-xml-attribute-selectorFlow" doc:id="3aef5342-70b0-4f18-b4a6-3de45e97983b" >
+		<ee:transform doc:name="Transform Message" doc:id="5bc2cb3b-09c6-4f0f-825a-0d2f59ab2205" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myVar = read('<product id="1" type="electronic">
+  <brand>SomeBrand</brand>
+</product>', 'application/xml')
+output application/json
+---
+{
+	"type": myVar.product.@."type",
+	"name" : myVar.product.brand,
+     "attributes": myVar.product.@
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

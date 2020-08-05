@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="45-if-else-exampleFlow" doc:id="7cec2540-fe7d-43d5-bf0d-d18828beb2d9" >
+		<ee:transform doc:name="Transform Message" doc:id="c1a4d5ae-6a53-449e-9894-b8bbc09cba3e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var myVar = { country : "FRANCE" }
+var v2 = {color: "Green"}
+---
+{	(if(myVar.country =="USA"){
+		currency: "USD"
+	}else{
+		currency: "EUR"
+	}),
+
+(if(v2.color == "RED"){
+	color: "dark Red"
+}else if(v2.color == "Green"){
+	color: "light Green"
+}else{
+	color: "Blue"
+})
+
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

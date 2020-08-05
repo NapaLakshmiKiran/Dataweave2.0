@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="20-example-short-xml-payloadsFlow" doc:id="857a712c-7b43-48eb-aeac-9cc112906c78" >
+		<ee:transform doc:name="Transform Message" doc:id="41a4a82a-0285-4503-856f-2dce195f66e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myInput = read("<root>
+    <order>
+      <items>1</items>
+      <items>3</items>
+    </order>
+    <order>
+      <items>2</items>
+    </order>
+</root>",
+"application/xml")
+output application/json
+---
+ContainsRequestedItem: myInput.root.*order.*items contains "3"
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

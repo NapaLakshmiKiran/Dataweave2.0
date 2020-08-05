@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="16-map-and-merge-fieldsFlow" doc:id="b34254fe-29fb-4e78-bb8b-2c3549d608b8" >
+		<ee:transform doc:name="Transform Message" doc:id="ca80e9a5-6056-40af-8711-9a111e046f04" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myVar = [
+  { bookId: 101,
+    title: "world history",
+    price: "19.99"
+  },
+  {
+    bookId: 202,
+    title: 'the great outdoors',
+    price: "15.99"
+  }
+]
+var myVar2 = [
+  {
+    bookId: 101,
+    author: "john doe"
+  },
+  {
+    bookId: 202,
+    author: "jane doe"
+  }
+]
+output application/json
+---
+
+myVar map(item, index) -> using (id = item.bookId){
+	"id": id,
+	"title":item.title,
+	"cost": item.price,
+	(myVar2 filter ($.bookId contains id) map(item)->{
+		"author": upper(item.author)
+	})
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

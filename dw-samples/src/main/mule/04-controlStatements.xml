@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="controlStatementsFlow" doc:id="8e09f662-023c-4277-8de1-c0d0f7f53199" >
+		<ee:transform doc:name="IF else Conditions" doc:id="f02a2803-33db-4d0c-a146-32c6b571a942" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var v1 = {"country": "USA"}
+var v2 = {"color": "RED"}
+var v3 = {"car": "BMW"}
+var s1 = [1,2,3]
+output application/json
+---
+{	
+	s:if((v3.car =="BMW")){
+		(currency2: "USD2") if (v1.country == "USA"),
+		(color: v2.color) if (v2.color == "RED")
+	}else{},
+	
+	(if (v3.car =="BMW"){
+		(currency2: "USD2") if (v1.country == "USA"),
+		(color: v2.color) if (v2.color == "RED")
+	}else{}),
+		
+	currency: if (v1.country =="USA") "USD" else "",
+	currency: if (v1.country =="UK")  "GBP" else "",
+	
+	V1IsArray: if(v1 is Array) "Array" else "not Array",
+	S1IsArray: if(s1 is Array) "Array" else "not Array"
+}
+
+		
+
+
+
+
+
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="ae8985e2-bc05-4baa-9c60-30a3a299ac99" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var v = "1/1/11"
+var n = "2"
+var a = "(1,885.20)"
+var b = "(100)"
+var c = ""
+fun removeBraces(s) = s replace "(" with "" replace ")" with "" replace "," with ""
+fun formatAsNumber(s) = (if(s == "" or s == null or s == "- 0") "0.00" else s replace "(" with "" replace ")" with "" replace "," with "") as Number as String {format: ".00"} as Number
+
+---
+{
+	ab: a,
+	data: removeBraces(a)
+	
+	
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Pattern Matcher type check" doc:id="9db5cc39-9bad-405e-b529-b1321230caab" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var v1 = [1,2,3]
+var v2 = "123"
+fun typeCheck(data) = data match {
+    case is String -> "variable is String"
+    case is Number -> "variable is Number"
+    else -> "Diffferent Type"
+  }
+---
+{
+	"v1 is": typeCheck(v1),
+	"v2 is": typeCheck(v2)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="coercion" doc:id="335f2ed1-3897-4016-82f4-eb33428dc623" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var payload = {a: 1, b:2}
+---
+{
+	a: payload.&a,
+	b: payload.&b
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

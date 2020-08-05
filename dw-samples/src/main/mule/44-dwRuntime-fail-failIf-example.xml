@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config2" doc:name="HTTP Listener config" doc:id="83fb9067-1b4c-40e3-96aa-b41f7de4997c" >
+		<http:listener-connection host="0.0.0.0" port="8071" />
+	</http:listener-config>
+	<flow name="dwRuntimeFlow" doc:id="1e9e6d99-6dcc-4c52-bb69-c8c75bae21c0" >
+		<http:listener doc:name="Listener" doc:id="7b1ca304-2d05-4da2-8275-3e6f6f5a9619" config-ref="HTTP_Listener_config2" path="/fail"/>
+		<logger level="INFO" doc:name="Logger" doc:id="53c8b578-3c30-4bec-a6ec-02b18af2a9cb" message="before fail"/>
+		<ee:transform doc:name="Fail" doc:id="cb97860d-9440-4f40-92f3-401aca935040" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import * from dw::Runtime
+//var result = [1,2]
+var result = {}
+output application/json
+---
+if(sizeOf(result) <= 0) fail('Data was empty') else result
+//{ "result" : "SUCCESS" failIf (isEmpty(result)) }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="38c3db3e-5f61-4e33-8994-e98c8a192e98" message="After fail...."/>
+	</flow>
+</mule>

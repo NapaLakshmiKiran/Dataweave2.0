@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="56-pattern-matching-example3Flow" doc:id="3e71125f-31fa-43e6-86d4-70608a5f7810" >
+		<ee:transform doc:name="Transform Message" doc:id="61c162ba-2f79-4b00-a41c-901421da3de4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myInput = {
+  "string": "Emiliano",
+  "number": 3.14
+}
+output application/json
+---
+{
+  a: myInput.string match {
+    case str if str == "Mariano" -> str ++ " de Achaval"
+    case str if str == "Emiliano" -> str ++ " Lesende"
+  },
+  b: myInput.number match {
+    case num if num == 3 -> "equal"
+    case num if num > 3 -> "greater than"
+    case num if num < 3 -> "less than"
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

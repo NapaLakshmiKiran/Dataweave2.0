@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="65-xml-key-value-pair-selectorFlow" doc:id="fcddd84f-58d1-44dd-951b-311a0573f5e2" >
+		<ee:transform doc:name="Transform Message" doc:id="a048239c-3881-4440-957b-1fb1bb0798df" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myData = read("<users>
+  <user>Mariano</user>
+  <user>Martin</user>
+  <user>Leandro</user>
+  <admin>Admin</admin>
+  <admin>org_owner</admin>
+</users>", "Application/xml")
+output application/xml
+---
+{
+	Users: myData.users.&user
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

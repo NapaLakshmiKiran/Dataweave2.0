@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="40-funcation-declarationFlow" doc:id="aa0cf0a1-10a8-4792-b71b-f9e3049a484a" >
+		<ee:transform doc:name="Transform Message" doc:id="9acf92a0-e560-4db5-93d9-9fc9c44d08ac" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myinput = {
+  "field1": "Annie",
+  "field2": "Point",
+  "field3": "Stuff"
+}
+
+fun toUser(obj) ={
+	"firstName": obj.field1,
+	"LastName": obj.field2
+}
+output application/json
+---
+{
+	Users: toUser(myinput)
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

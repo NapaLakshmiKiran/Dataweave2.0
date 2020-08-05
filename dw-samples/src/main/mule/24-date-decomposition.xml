@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="24-date-decompositionFlow" doc:id="7bf0d674-afa1-4582-8c3e-3ad3d20bbceb" >
+		<ee:transform doc:name="Transform Message" doc:id="7ef73a7f-47a3-4cda-a6fe-62c85ea058cf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var myDate = |2003-10-01T23:57:59.700-03:00|
+---
+{
+	year: myDate.year,
+  month: myDate.month,
+  day: myDate.day,
+  hour: myDate.hour,
+  minutes: myDate.minutes,
+  seconds: myDate.seconds,
+  milliseconds: myDate.milliseconds,
+  nanoseconds: myDate.nanoseconds,
+  quarter: myDate.quarter,
+  dayOfWeek: myDate.dayOfWeek,
+  dayOfYear: myDate.dayOfYear,
+  offsetSeconds: myDate.offsetSeconds
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

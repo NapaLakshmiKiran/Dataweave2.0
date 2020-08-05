@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="78-filter-selector-from-xmlFlow" doc:id="bdb3e37c-3dfc-4378-8f1c-0507ed59fa91" >
+		<ee:transform doc:name="Transform Message" doc:id="1b785e58-ef38-4102-9315-9a98bcc8a094" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var v1 = read("<users>
+  <name>Mariano</name>
+  <name>Luis</name>ssss
+  <name>Mariano</name>
+</users>","applicatio/xml")
+output application/json
+---
+{
+	users: v1.users.*name[?($ == "Mariano")],
+	aa: v1 mapObject {($$) : $[?($ == "Mariano")]}
+	
+		
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

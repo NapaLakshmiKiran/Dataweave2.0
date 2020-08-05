@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="MapAndFlattenAnArrayFlow" doc:id="0df37b27-6e44-41ea-a538-f29bc5adf370" >
+		<ee:transform doc:name="Transform Message" doc:id="60c520ba-6d6e-4dc8-ac14-f5c624bfeecc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var myData = [{name:1},{name:2},{name:3}]
+fun myExternalFunction(data): Array =
+    if(data.name == 1)
+        []
+    else if(data.name == 2)
+        [{name: 3}, {name:5}]
+    else
+        [data]
+---
+flatten(myData map ((item, index) -> myExternalFunction(item)))
+//myData flatMap ((item, index) -> myExternalFunction(item))
+//----]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

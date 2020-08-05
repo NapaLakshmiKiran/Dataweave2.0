@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="28-string-interpretationFlow" doc:id="77302524-b698-45a6-bb5c-5af262c387b0" >
+		<ee:transform doc:name="Transform Message" doc:id="5c45a57f-9099-4c97-a5ac-c7bfaa8d1f9d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var name = "Sri Rama"
+output application/json
+---
+{
+	Greetings: "Jai $name",
+	sum: "1 + 1 = $(1+1)"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

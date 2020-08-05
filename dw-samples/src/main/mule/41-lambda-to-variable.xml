@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="41-lambda-to-variableFlow" doc:id="aed03492-89a2-4aa8-9c48-daf018ab06ca" >
+		<ee:transform doc:name="Transform Message" doc:id="88daab8a-01f6-4e62-94f6-de9903c15dfc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myinput = {
+  "field1": "Annie",
+  "field2": "Point",
+  "field3": "Stuff"
+}
+
+output application/json
+var toUser = (user) ->{
+	"fName": user.field1,
+	"lName": user.field2
+}
+---
+{
+	"Users": toUser(myinput) 
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

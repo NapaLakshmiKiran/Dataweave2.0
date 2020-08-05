@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="01-dw-basics-startFlow" doc:id="afcc72d7-7cd4-4796-90d6-a72f9af8086b" >
+		<ee:transform doc:name="Transform Message" doc:id="91960dd3-8331-45e2-8dc9-17fdbae4077d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+var numbers = ["one", "two", 3]
+
+var object1 = { one:1, two:2}
+
+var object2 = { two:2, three: 3}
+
+var objArray = [
+	object1: object1,
+	object2: object2
+]
+---
+{
+	(objArray),(object1),four:4
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

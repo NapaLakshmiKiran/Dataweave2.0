@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="29-create-currencytype-use-it-type-keyword-exampleFlow" doc:id="feada853-c9fa-4335-bc65-8c93526b83dd" >
+		<ee:transform doc:name="Transform Message" doc:id="c3c7ddaa-b7c4-4a81-8d63-79a194cc9e8d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var items = readUrl("classpath://dwtypes/items.xml", "application/xml")
+type Currency = String { format: "\$#,###.00"}
+output application/json
+---
+{
+	books: items.items.*item map 
+		p: $.price as Currency
+		
+	
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

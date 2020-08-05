@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<global-property doc:name="Global Property" doc:id="260309f7-fd35-4b5e-963c-b7887851b9d1" name="smtp.host" value="smtp.mail.com" />
+	<global-property doc:name="Global Property" doc:id="238ae15a-0598-4c31-8701-2fd8d230f7e1" name="smtp.subject" value="Subject of Email" />
+	
+	<configuration-properties file="ports.yaml"/>
+
+	<http:listener-config name="HTTP_Listener_properties_config" doc:name="HTTP Listener config" doc:id="d2f56acf-b4d4-481b-a671-6320f9be5e44" basePath="/conf">
+		<http:listener-connection host="localhost" port="8085" />
+	</http:listener-config>
+	<flow name="myProject_flow1">
+	    <http:listener doc:name="Listener" doc:id="3ba1c476-7441-4536-9c7a-d3a15c56b701" config-ref="HTTP_Listener_properties_config" path="/v1"/>
+		<logger message="${ftp.port}" doc:name="System Property Set in Property File" level="INFO"/>
+		<logger level="INFO" doc:name="logging host" doc:id="a5772b99-9b57-45bb-8c49-fe3e553d0092" message="${smtp.host}"/>
+		<logger level="INFO" doc:name="port" doc:id="9662b20c-2cfa-4551-9ff6-ad9b403482ec" message="${smtp.port}"/>
+		<set-payload value="${file::properties-file.txt}" doc:name="Set Payload" doc:id="317b0d39-e84e-4fca-97b8-82cea01b2b59" />
+		<logger level="INFO" doc:name="Logger" doc:id="28f4adb4-9560-4d4e-9251-ac7d9bc1eb7a" message="#[payload]"/>
+	
+</flow>
+</mule>

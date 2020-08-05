@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="57-pattern-matching-example4Flow" doc:id="39764986-9546-4538-85e9-11673fec34f8" >
+		<ee:transform doc:name="Transform Message" doc:id="edb6a18d-b066-40e1-a552-b8545c9e1c25" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var myInput =
+{
+  "a": "Emiliano",
+  "b": 3.14
+}
+output application/json
+---
+{
+  a: myInput.a match {
+    case is Object -> 'OBJECT'
+    case is String -> 'STRING'
+    case is Number -> 'NUMBER'
+    case is Boolean -> 'BOOLEAN'
+    case is Array -> 'ARRAY'
+    case is Null -> 'NULL'
+    else -> 'ANOTHER TYPE'
+  },
+  b: myInput.b match {
+    case y is Object -> { 'Type': { 'OBJECT' : y} }
+    case y is String -> { 'Type': { 'STRING' : y} }
+    case y is Number -> { 'Type': { 'NUMBER' : y} }
+    case y is Boolean -> { 'Type': { 'BOOLEAN' : y} }
+    case y is Array -> { 'Type': { 'ARRAY' : y} }
+    case y is Null -> { 'Type': { 'NULL' : y} }
+    else -> { 'Type': { 'ANOTHER TYPE' : myInput.b} }
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

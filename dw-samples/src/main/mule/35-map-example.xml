@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="35-map-exampleFlow" doc:id="815cec37-1fb6-4ac7-9203-7b2615f11de5" >
+		<ee:transform doc:name="Transform Message" doc:id="d5453fad-69f9-4297-a941-73060dc49ef7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var var1 = {
+    "books": [
+      {
+        "-category": "cooking",
+        "title": {
+          "-lang": "en",
+          "#text": "Everyday Italian"
+        },
+        "author": "Giada De Laurentiis",
+        "year": "2005",
+        "price": "30.00"
+      },
+      {
+        "-category": "children",
+        "title": {
+          "-lang": "en",
+          "#text": "Harry Potter"
+        },
+        "author": "J K. Rowling",
+        "year": "2005",
+        "price": "29.99"
+      },
+      {
+        "-category": "web",
+        "title": {
+          "-lang": "en",
+          "#text": "XQuery Kick Start"
+        },
+        "author": [
+          "James McGovern",
+          "Per Bothner",
+          "Kurt Cagle",
+          "James Linn",
+          "Vaidyanathan Nagarajan"
+        ],
+        "year": "2003",
+        "price": "49.99"
+      },
+      {
+        "-category": "web",
+        "-cover": "paperback",
+        "title": {
+          "-lang": "en",
+          "#text": "Learning XML"
+        },
+        "author": "Erik T. Ray",
+        "year": "2003",
+        "price": "39.95"
+      }
+    ]
+}
+output application/json
+---
+items: var1.books map(item, index) -> {
+	category: "Book",
+	price: item.price as Number,
+	id: index,
+	properties: {
+		title: item.title,
+		author: item.author,
+		year: item.year
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

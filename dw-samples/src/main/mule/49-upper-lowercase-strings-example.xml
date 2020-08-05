@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="49-upper-lowercase-strings-exampleFlow" doc:id="41152f35-4360-461b-856c-da52e02af382" >
+		<ee:transform doc:name="Transform Message" doc:id="2df53134-8a1f-4d03-afd6-fd7e28e2a22e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var msg = "LOVEly"
+
+var msg2 = (x = "ignore") -> "hello"
+
+var toUpper = (aString) -> upper(aString)
+var toLower = (aString) -> lower(aString)
+
+var combined = (function, msg="universe") -> function(msg ++ " WORLD")
+
+fun toTitle(text: String) = toLower(text[0]) ++ toUpper(text[1 to -1])
+---
+[
+   msg: msg,
+   msg2: msg2(),
+   toUpper: toUpper(msg),
+   combined: combined(toUpper, "hello"),
+   combined2: combined(((x) -> lower(x) ++ " Today"), msg),
+   toUpper2: toTitle(msg),
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

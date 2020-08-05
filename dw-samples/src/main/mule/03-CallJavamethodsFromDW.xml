@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="CallJavamethodsFromDWFlow" doc:id="f50f8100-d8f7-4b4d-b4f3-eff4c5ae2c83" >
+		<ee:transform doc:name="calling static method" doc:id="5f046af6-7863-43f2-8ea0-f478716c3d5a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import java!util::MyUtils
+import java!util::MyClass
+output application/json
+---
+{
+	a: MyUtils::appendRandom("sss"),
+	b: MyClass::new("lakshmi").foo
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="11-supported-datatypesFlow" doc:id="9dabca3f-100a-492a-b7ce-20950f4f8e0c" >
+		<ee:transform doc:name="Transform Message" doc:id="fae4f813-8f61-40f0-96cc-c643cd075c6f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	/*
+	 * multi line comment
+	 */
+	myString: "hello world",
+  	myNumber: 123,
+  	myfloatNumber: 123.009,
+  	myVeryBigNumber: 12344,
+  	myDate: |2020-04-15|,
+  	myTime: |12:05:44|,
+  	myBoolean:false,
+  	myArray:[1,2,3],
+  	myMixedArray:[1,2,"both", {hello: "there"}],
+  	myObjectkeyValuepair:{key: "value", cc:"IND"},
+  	myObjectWithConditaionlField:{a:{ b:1, (c:2) if false, (d:4) if true}},
+  	myNUll: null,
+  	myBinary: "abcd1234" as Binary
+  	// single line comment
+  	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

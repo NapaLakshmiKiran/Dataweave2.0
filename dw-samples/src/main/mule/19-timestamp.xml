@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="19-timestampFlow" doc:id="dbe996d2-64dc-459f-b1fb-51146d1079c1" >
+		<ee:transform doc:name="Transform Message" doc:id="b096a8a3-94d4-4d5f-840b-e055f3a34894" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+var timestamp = now()
+output application/json
+---
+timestamp]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

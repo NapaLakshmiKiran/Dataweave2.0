@@ -1,0 +1,4 @@
+here are the below examples tried in this project with Dataweave 2.0
+
+Reader AndWriting Properties.xml: reading csv file and writing to the csv
+ReadingXpath.xml: tell how to read xpth
